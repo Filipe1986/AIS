@@ -1,7 +1,7 @@
 {
-  "name": "challenge-nodejs-baas",
+  "name": "challenge-AIS",
   "version": "1.0.0",
-  "description": "challenge-nodejs-baas",
+  "description": "challenge-AIS",
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
@@ -21,6 +21,7 @@
     "log4js": "^6.3.0",
     "mongoose": "^5.10.3",
     "mongoose-currency": "^0.2.0",
+    "mongoose-unique-validator": "^2.0.3",
     "multer": "^1.4.2",
     "nodemon": "^2.0.2"
   },

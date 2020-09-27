@@ -8,12 +8,12 @@ module.exports = app => {
 
     app
     .route('/movies')
-    .get(movieController.listMovies);
+    .get(movieController.listSearchedMovies);
 
     app.route('/movies/:id')
     .get(movieController.findMovieById);
 
-    app.route('/movies/:name')
+    app.route('/movies/name/:name')
     .get(movieController.findMovieById);
 
 };

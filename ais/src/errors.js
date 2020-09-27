@@ -12,14 +12,16 @@ class InternalServerError extends Error {
   }
 }
 
-class InsufficientFunds extends Error {
+class BadRequest extends Error {
   constructor(mensagem) {
     super(mensagem);
-    this.name = 'InsufficientFunds';
+    this.name = 'BadRequest';
   }
 }
 
+
 module.exports = {
   InvalidArgumentError: InvalidArgumentError,
-  InternalServerError: InternalServerError
+  InternalServerError: InternalServerError,
+  BadRequest: BadRequest,
 };

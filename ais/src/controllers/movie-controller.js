@@ -1,4 +1,5 @@
-const { InvalidArgumentError, InternalServerError } = require('../errors');
+const { InvalidArgumentError, InternalServerError, BadRequest } = require('../errors');
+const validations = require('../validations');
 
 const logger = require("log4js").getLogger();
 logger.level = "debug";
@@ -11,7 +12,43 @@ const movieService = require('../services/movies-services');
 module.exports = {
 
 
-  listMovies: async (req, res) => {
+ 
+
+  findMovieById:  async (req, res) => {
+    logger.debug('movie-controller :: findMovieById :: '+req.params.id)
+    var id = req.params.id;
+
+
+    try {
+      if(!validations.isInt(id)) {
+        throw new BadRequest('The parameter should be a number!');
+      }
+      let movie = await movieService.findMovieById(id);
+      logger.debug('movie-controller :: findMovieById :: movie :: '+ movie);
+      let translations = await movieService.findMovieTranslationsById(id)
+      logger.debug('movie-controller :: findMovieById :: movie :: '+ translations)
+      movie.translations = translations.translations;
+
+      movieDao.addMovie(movie);
+      res.status(200).send(movie);
+    } catch (error) {
+      logger.debug('movie-controller :: findMovieById :: movie :: error :: '+  error);
+
+      if (error instanceof BadRequest) {
+        console.log('movie-controller :: findMovieById :: error :: BadRequest');
+        res.status(400).json({ error: error.message });
+      } else if (error instanceof InternalServerError) {
+        console.log('movie-controller :: findMovieById :: error :: InternalServerError');
+        res.status(500).json({ error: error.message });
+      } else if(error.message == 'Request failed with status code 404'){
+        res.status(404).json({ error: error.message });
+      } else {
+        console.log('movie-controller :: findMovieById :: error :: generic');
+        res.status(500).json({ error: error.message });
+      }
+    }
+  },
+  listSearchedMovies: async (req, res) => {
     try{
       const movies = await movieDao.listMovies();
       res.json(movies);
@@ -20,27 +57,37 @@ module.exports = {
     }
   },
 
-  findMovieById:  async (req, res) => {
-    logger.debug('movie-controller :: findMovieById :: '+req.params.id)
-    var id = req.params.id;
-    try {
-      let movie = await movieService.findMovieById(id)
-      logger.debug('movie-controller :: findMovieById :: movie :: '+ movie)
-
-      //const movie = await movieDao.findMovieById(id);
-      res.status(200).send(movie);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  },
   findMovieByName:  async (req, res) => {
-    logger.debug('movie-controller :: findMovieByName :: '+name)
+    logger.debug('movie-controller :: findMovieById :: '+req.params.name)
+    var name = req.params.name;
+
+
     try {
-      const movie = await movieDao.findMovieById(req.params.name);
+      if(validations.isInt(name)) {
+        throw new BadRequest('The parameter should be a number!');
+      }
+      let movie = await movieService.findMovieByName(name)
+      logger.debug('movie-controller :: findMovieByName :: movie :: '+ movie)
+
+      movieDao.addMovie(movie);
       res.status(200).send(movie);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      logger.debug('movie-controller :: findMovieByName :: movie :: error :: '+  error);
+
+      if (error instanceof BadRequest) {
+        console.log('movie-controller :: findMovieByName :: error :: BadRequest');
+        res.status(400).json({ error: error.message });
+      } else if (error instanceof InternalServerError) {
+        console.log('movie-controller :: findMovieByName :: error :: InternalServerError');
+        res.status(500).json({ error: error.message });
+      } else if(error.message == 'Request failed with status code 404'){
+        res.status(404).json({ error: error.message });
+      } else {
+        console.log('movie-controller :: findMovieByName :: error :: generic');
+        res.status(500).json({ error: error.message });
+      }
     }
   },
+
 
 };

@@ -7,21 +7,13 @@ module.exports = {
     }
   },
 
-  minimalSize: (valor, name, minimo) => {
-    if (valor.length < minimo) {
-      console.log(`O campo ${name} precisa ter mais que ${minimo} caracteres!`)
-      throw new InvalidArgumentError(
-        `O campo ${name} precisa ter mais que ${minimo} caracteres!`
-      );
+   isInt : (value) =>{
+    var x;
+    if (isNaN(value)) {
+      return false;
     }
-  },
+    x = parseFloat(value);
+    return (x | 0) === x;
+  }
 
-  maxSize: (valor, name, maximo) => {
-    if (valor.length > maximo) {
-      console.log(`O campo ${name} precisa ter menos que ${maximo} caracteres!`)
-      throw new InvalidArgumentError(
-        `O campo ${name} precisa ter menos que ${maximo} caracteres!`
-      );
-    }
-  },
 };

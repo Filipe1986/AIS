@@ -34,7 +34,7 @@ module.exports = {
 
   listMovies: () => {
     return new Promise((resolve, reject) => {
-      console.log("movie-dao :: list :: list all movies");
+      logger.debug("movie-dao :: list :: list all movies");
       let movie = db.model("Movie");
       
 
@@ -42,24 +42,25 @@ module.exports = {
         if (errors) {
           return reject("Error listing movies");
         }
-        console.log(movies);
+        logger.debug(movies);
         resolve(movies);
       });
     });
   },
 
-  addMovie: () =>{
+  addMovie: (movie) =>{
     return new Promise((resolve, reject) => {
-      console.log("movie-dao :: add :: add single movie");
-      let movie = db.model("Movie");
+      logger.debug("movie-dao :: save :: save single movie");
+      let movieModel = db.model("Movie");
       
 
-      movie.find({},  function (errors, movies) {
-        if (errors) {
-          return reject("Error listing movies");
+      movieModel.create(movie,  function (error, movies) {
+        if (error) {
+          logger.debug(error);
+          return reject("Error adding movie");
         }
-        console.log(movies);
-        resolve(movies);
+        logger.debug('movie-dao :: addMovie :: ', movie);
+        resolve(movie);
       });
     });
   }
