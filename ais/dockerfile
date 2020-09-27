@@ -1,0 +1,15 @@
+# Choosing the node version
+FROM node:latest
+# Setting enviroment variables
+ENV SERVER_PORT=3000
+ENV DATABASE_URL=mongodb://localhost:27017/ais
+ENV API_KEY=8cc741a66510c01c088836f001288ef9
+# from folder -> to 
+COPY . /
+# Choosing the folder inside the container
+WORKDIR /
+# commands
+RUN npm install 
+ENTRYPOINT ["npm", "start"]
+# Exposing the port
+EXPOSE $SERVER_PORT

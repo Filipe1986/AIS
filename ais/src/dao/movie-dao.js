@@ -11,7 +11,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
 
       let movie = db.model("Movie");
-      logger.debug("movie-dao :: findById ::", id)
+      logger.log("movie-dao :: findById ::", id)
 
       movie.findById(id, function(errors, movie){
         if(errors){
@@ -34,7 +34,7 @@ module.exports = {
 
   listMovies: () => {
     return new Promise((resolve, reject) => {
-      logger.debug("movie-dao :: list :: list all movies");
+      logger.log("movie-dao :: list :: list all movies");
       let movie = db.model("Movie");
       
 
@@ -42,7 +42,7 @@ module.exports = {
         if (errors) {
           return reject("Error listing movies");
         }
-        logger.debug(movies);
+        logger.log(movies);
         resolve(movies);
       });
     });
@@ -50,16 +50,16 @@ module.exports = {
 
   addMovie: (movie) =>{
     return new Promise((resolve, reject) => {
-      logger.debug("movie-dao :: save :: save single movie");
+      logger.log("movie-dao :: save :: save single movie");
       let movieModel = db.model("Movie");
       
 
       movieModel.create(movie,  function (error, movies) {
         if (error) {
-          logger.debug(error);
+          logger.log(error);
           return reject("Error adding movie");
         }
-        logger.debug('movie-dao :: addMovie :: ', movie);
+        logger.log('movie-dao :: addMovie :: ', movie);
         resolve(movie);
       });
     });

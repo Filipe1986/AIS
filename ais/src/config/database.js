@@ -14,20 +14,20 @@ module.exports = function(uri){
   });
 
   mongoose.connection.on('connected', () => {
-    logger.debug("Mongoose conectado!");
+    logger.log("Mongoose conectado!");
   });
   
   mongoose.connection.on('error', function (error){
-    logger.debug("error" , error)
+    logger.log("error" , error)
   });
   /*
   mongoose.connection.on('disconnected', function (){
-    logger.debug("Mongoose desconectado!")
+    logger.log("Mongoose desconectado!")
   });
   
   process.on('SIGINT', function(){
     mongoose.connection.close(function(){
-      logger.debug('Mongoose desconectado com a aplicação!');
+      logger.log('Mongoose desconectado com a aplicação!');
       process.exit(0);
     })
   });*/
