@@ -13,7 +13,4 @@ module.exports = app => {
     app.route('/movies/:id')
     .get(movieController.findMovieById);
 
-    app.route('/movies/name/:name')
-    .get(movieController.findMovieById);
-
 };
