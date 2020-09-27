@@ -15,7 +15,7 @@ module.exports = {
  
 
   findMovieById:  async (req, res) => {
-    logger.debug('movie-controller :: findMovieById :: '+req.params.id)
+    logger.log('movie-controller :: findMovieById :: '+req.params.id)
     var id = req.params.id;
 
 
@@ -24,15 +24,15 @@ module.exports = {
         throw new BadRequest('The parameter should be a number!');
       }
       let movie = await movieService.findMovieById(id);
-      logger.debug('movie-controller :: findMovieById :: movie :: '+ movie);
+      logger.log('movie-controller :: findMovieById :: movie :: '+ movie);
       let translations = await movieService.findMovieTranslationsById(id)
-      logger.debug('movie-controller :: findMovieById :: movie :: '+ translations)
+      logger.log('movie-controller :: findMovieById :: movie :: '+ translations)
       movie.translations = translations.translations;
 
       movieDao.addMovie(movie);
       res.status(200).send(movie);
     } catch (error) {
-      logger.debug('movie-controller :: findMovieById :: movie :: error :: '+  error);
+      logger.log('movie-controller :: findMovieById :: movie :: error :: '+  error);
 
       if (error instanceof BadRequest) {
         console.log('movie-controller :: findMovieById :: error :: BadRequest');
@@ -58,7 +58,7 @@ module.exports = {
   },
 
   findMovieByName:  async (req, res) => {
-    logger.debug('movie-controller :: findMovieById :: '+req.params.name)
+    logger.log('movie-controller :: findMovieById :: '+req.params.name)
     var name = req.params.name;
 
 
@@ -67,12 +67,12 @@ module.exports = {
         throw new BadRequest('The parameter should be a number!');
       }
       let movie = await movieService.findMovieByName(name)
-      logger.debug('movie-controller :: findMovieByName :: movie :: '+ movie)
+      logger.log('movie-controller :: findMovieByName :: movie :: '+ movie)
 
       movieDao.addMovie(movie);
       res.status(200).send(movie);
     } catch (error) {
-      logger.debug('movie-controller :: findMovieByName :: movie :: error :: '+  error);
+      logger.log('movie-controller :: findMovieByName :: movie :: error :: '+  error);
 
       if (error instanceof BadRequest) {
         console.log('movie-controller :: findMovieByName :: error :: BadRequest');
