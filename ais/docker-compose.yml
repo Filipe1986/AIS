@@ -1,0 +1,25 @@
+version: '3'
+services: 
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    networks: 
+      - dev
+    ports:
+      - "27017:27017"
+  node:
+    build: 
+      dockerfile: dockerfile
+      context: .
+    image: node
+    container_name: node
+    ports:
+      - "3000"
+    networks: 
+      - dev
+    depends_on:
+      - "mongodb"
+
+networks:
+  dev: 
+    driver: bridge

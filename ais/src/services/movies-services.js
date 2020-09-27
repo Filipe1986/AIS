@@ -14,25 +14,25 @@ var configGet = {
 module.exports = {
   findMovieById: (id) => {
     return new Promise((resolve, reject) => {
-      logger.debug('movie-service :: findMovieById :: '+ id)
+      logger.log('movie-service :: findMovieById :: '+ id)
     
 
-      logger.debug(baseURL);
-      logger.debug(id);
-      logger.debug(api_key_url);
+      logger.log(baseURL);
+      logger.log(id);
+      logger.log(api_key_url);
   
       configGet.url = (baseURL + id + api_key_url);
-      logger.debug('movie-service :: findMovieById :: url :: ' + configGet.url);
+      logger.log('movie-service :: findMovieById :: url :: ' + configGet.url);
   
       axios(configGet)
       .then(function (response) {
-        logger.debug(JSON.stringify(response.data))
+        logger.log(JSON.stringify(response.data))
         return resolve(response.data);
       })
         .catch(function (error) {
           
-          logger.debug(JSON.stringify(error));
-          logger.debug(JSON.stringify(error.response.status));
+          logger.log(JSON.stringify(error));
+          logger.log(JSON.stringify(error.response.status));
           reject(error);
         });
   
@@ -41,25 +41,25 @@ module.exports = {
   },
   findMovieTranslationsById: (id) => {
     return new Promise((resolve, reject) => {
-      logger.debug('movie-service :: findMovieTranslationsById :: '+ id)
+      logger.log('movie-service :: findMovieTranslationsById :: '+ id)
     
 
-      logger.debug(baseURL);
-      logger.debug(id);
-      logger.debug(api_key_url);
+      logger.log(baseURL);
+      logger.log(id);
+      logger.log(api_key_url);
   
       configGet.url = (baseURL + id + translationURL +api_key_url);
-      logger.debug('movie-service :: findMovieTranslationsById :: url :: ' + configGet.url);
+      logger.log('movie-service :: findMovieTranslationsById :: url :: ' + configGet.url);
   
       axios(configGet)
       .then(function (response) {
-        logger.debug(JSON.stringify(response.data))
+        logger.log(JSON.stringify(response.data))
         return resolve(response.data);
       })
         .catch(function (error) {
           
-          logger.debug(JSON.stringify(error));
-          logger.debug(JSON.stringify(error.response.status));
+          logger.log(JSON.stringify(error));
+          logger.log(JSON.stringify(error.response.status));
           reject(error);
         });
   
